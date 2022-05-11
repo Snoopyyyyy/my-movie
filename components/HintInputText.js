@@ -54,8 +54,9 @@ const hintInputText = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: '1%',
-        height: 40,
-        fontSize: 16
+        height: 52,
+        fontSize: 16,
+        backgroundColor: '#FFF'
     },
     textInputN: {
         marginHorizontal: '10%',
@@ -66,8 +67,9 @@ const hintInputText = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: '1%',
-        height: 40,
-        fontSize: 16
+        height: 52,
+        fontSize: 16,
+        backgroundColor: '#FFF'
     },
     textInputP: {
         marginHorizontal: '10%',
@@ -78,8 +80,9 @@ const hintInputText = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: '1%',
-        height: 40,
-        fontSize: 16
+        height: 52,
+        fontSize: 16,
+        backgroundColor: '#FFF'
     },
 });
 

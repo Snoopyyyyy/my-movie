@@ -10,11 +10,16 @@ export let Movie = {
     },
 
     details: async (id) => {
-        let res = await fetch(`${url}/movie/${id}?api_key=${token}`)
+        let res = await fetch(`${url}/movie/${id}?api_key=${token}`);
+        return await res.json();
+    },
+
+    gender: async () => {
+        let res = await fetch(`${url}/genre/movie/list?api_key=${token}`);
         return await res.json();
     }
 }
 
 export async function getImage(image) {
-   let res = await fetch(`https://image.tmdb.org/t/p/w500/${image}`)
+   let res = await fetch(`https://image.tmdb.org/t/p/w500/${image}`);
 }
