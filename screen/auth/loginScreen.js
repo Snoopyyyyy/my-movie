@@ -3,17 +3,14 @@ import {View, TouchableHighlight, Text, StyleSheet} from "react-native";
 import HintInputText from "../../components/HintInputText.js";
 import {css} from '../../styles';
 import Button from "../../components/Button";
-import {useNavigation} from "@react-navigation/native";
 import {Service} from '../../services/UserService';
 
 const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
-    const navigation = useNavigation();
 
     const login = () => {
         let res = Service.login(email, password);

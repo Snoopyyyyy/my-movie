@@ -3,18 +3,16 @@ import {StyleSheet, Text, View} from 'react-native';
 import {css} from "../../styles";
 import HintInputText from "../../components/HintInputText";
 import Button from "../../components/Button";
-import {useNavigation} from "@react-navigation/native";
 import {Service} from '../../services/UserService';
 
 const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const RegisterScreen = () => {
+const RegisterScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [error, setError] = useState('');
 
-    const navigation = useNavigation();
     const register = () => {
         let res = Service.register(email, password);
         if (res.type === 'error') {

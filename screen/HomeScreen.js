@@ -12,11 +12,6 @@ export default function HomeScreen({navigation}) {
 
     const [nameFilter, setNameFilter] = useState('');
 
-    const reloadFilter = (name) => {
-        setNameFilter(name);
-
-    }
-
     const getUpComing = () => {
         Movie.upComing().then((rawData) => {
             Movie.gender().then((rawGender) => {
@@ -47,7 +42,7 @@ export default function HomeScreen({navigation}) {
                 <HintInputText
                     placeholder={"Search a upcoming movie..."}
                     value={nameFilter}
-                    setValue={reloadFilter}/>
+                    setValue={setNameFilter}/>
             </View>
 
             <ScrollView>
