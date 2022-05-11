@@ -1,29 +1,29 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {css} from "../styles";
-import HintInputText from "../components/HintInputText";
-import Button from "../components/Button";
+import {View, TouchableHighlight, Text, StyleSheet} from "react-native";
+import HintInputText from "../../components/HintInputText.js";
+import {css} from '../../styles';
+import Button from "../../components/Button";
 import {useNavigation} from "@react-navigation/native";
-import {Service} from '../services/UserService';
+import {Service} from '../../services/UserService';
 
 const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const RegisterScreen = () => {
+const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirm, setConfirm] = useState('');
     const [error, setError] = useState('');
 
     const navigation = useNavigation();
-    const register = () => {
-        let res = Service.register(email, password);
+
+    const login = () => {
+        let res = Service.login(email, password);
         if (res.type === 'error') {
             setError(res.message);
         } else {
             setError('');
             navigation.navigate("Home");
         }
-    }
+    };
 
     return (
         <View style={css.view}>
@@ -38,31 +38,30 @@ const RegisterScreen = () => {
                 value={password}
                 setValue={setPassword}
                 type={"password"}/>
-            <HintInputText
-                placeholder={"confirm password"}
-                value={confirm}
-                setValue={setConfirm}
-                type={"password"}
-                regex={new RegExp('^' + password)}/>
 
             <View style={{marginTop: 30}}>
-                <Text style={registerScreenStyle.error}>{error}</Text>
                 <Button
-                    title={"Register"}
+                    title={"Login"}
                     type={"primary"}
-                    onPress={register}
-                    disabled={!emailPattern.test(email) || !password.length || !confirm.length}/>
-                <Button
-                    title={"Cancel"}
-                    type={"secondary"}
-                    onPress={() => navigation.navigate('Login')}/>
+                    onPress={login}
+                    disabled={!emailPattern.test(email) || !password.length}/>
+                <Text style={loginScreenStyle.error}>{error}</Text>
+                <Text style={loginScreenStyle.createAccountT} onPress={() => navigation.navigate('Register')}>Create an
+                    account</Text>
             </View>
         </View>
     );
 };
 
-
-const registerScreenStyle = StyleSheet.create({
+const loginScreenStyle = StyleSheet.create({
+    createAccountT: {
+        marginVertical: '1%',
+        textAlignVertical: 'center',
+        textAlign: 'center',
+        textDecorationLine: "underline",
+        width: "100%",
+        fontSize: 16
+    },
     error: {
         color: '#F44',
         fontSize: 16,
@@ -71,4 +70,6 @@ const registerScreenStyle = StyleSheet.create({
     }
 });
 
-export default RegisterScreen;
+export default LoginScreen;
+
+
