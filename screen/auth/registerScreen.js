@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {css} from "../../styles";
 import HintInputText from "../../components/HintInputText";
 import Button from "../../components/Button";
@@ -24,7 +24,8 @@ const RegisterScreen = ({navigation}) => {
     }
 
     return (
-        <View style={css.view}>
+        <SafeAreaView style={css.view}>
+            <StatusBar />
             <HintInputText
                 placeholder={"email"}
                 value={email}
@@ -55,7 +56,7 @@ const RegisterScreen = ({navigation}) => {
                     type={"secondary"}
                     onPress={() => navigation.navigate('Login')}/>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 

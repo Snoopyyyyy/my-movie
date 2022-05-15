@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, StyleSheet, SafeAreaView, ScrollView, View, Image} from "react-native";
+import {Text, StyleSheet, SafeAreaView, ScrollView, View, StatusBar} from "react-native";
 import {Picker} from "@react-native-picker/picker";
 import {Movie} from '../services/MovieService';
 import HintInputText from "../components/HintInputText";
@@ -9,22 +9,20 @@ import GenderCarousel from "../components/GenderCarousel";
 export default function HomeScreen({navigation}) {
     const [data, setData] = useState([]);
     const [genders, setGenders] = useState([]);
-
     const [nameFilter, setNameFilter] = useState('');
+    const [loading, setLoading] = useState((<View/>));
 
     const getUpComing = () => {
-        Movie.upComing().then((rawData) => {
+        setLoading((<Text style={homeStyle.loading}>Loading ...</Text>))
+        Movie.upComing(20).then((rawData) => {
             Movie.gender().then((rawGender) => {
+                setLoading((<View/>));
                 setGenders(rawGender.genres);
-                setData(rawData.results);
+                setData(rawData);
+
             });
         });
     };
-
-    useEffect(() => {
-        getUpComing();
-    }, []);
-
     const getGender = () => {
         return genders.filter(genre => {
             for (let movie of data) {
@@ -36,14 +34,22 @@ export default function HomeScreen({navigation}) {
         });
     }
 
+    useEffect(() => {
+        getUpComing();
+    }, []);
+
     return (
         <SafeAreaView style={homeStyle.container}>
+            <StatusBar backgroundColor={"#032541"}/>
+
             <View style={homeStyle.title}>
                 <HintInputText
                     placeholder={"Search a upcoming movie..."}
                     value={nameFilter}
                     setValue={setNameFilter}/>
             </View>
+
+            {loading}
 
             <ScrollView>
                 {getGender().map((gender, index) => {
@@ -69,7 +75,6 @@ const homeStyle = StyleSheet.create({
         width: '100%',
         height: '100%',
         display: 'flex',
-        marginTop: 24,
         flexDirection: 'column',
         backgroundColor: '#032541'
     },
@@ -93,7 +98,8 @@ const homeStyle = StyleSheet.create({
     },
     genderCarousel: {
         height: 170,
-        margin: 24,
+        marginHorizontal: 24,
+        marginBottom: 48,
         display: 'flex',
         flexDirection: 'column'
     },
@@ -105,5 +111,10 @@ const homeStyle = StyleSheet.create({
         borderColor: '#2BBBD0',
         borderBottomWidth: 2,
         color: '#EEE'
+    },
+    loading: {
+        color: '#EEE',
+        fontSize: 24,
+        textAlign: "center"
     }
 });

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableHighlight, Text, StyleSheet} from "react-native";
+import {View, TouchableHighlight, Text, StyleSheet, SafeAreaView, StatusBar} from "react-native";
 import HintInputText from "../../components/HintInputText.js";
 import {css} from '../../styles';
 import Button from "../../components/Button";
@@ -8,8 +8,9 @@ import {Service} from '../../services/UserService';
 const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const LoginScreen = ({navigation}) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    let test = true;
+    const [email, setEmail] = useState(test ? 'Admin@gmail.com' :'');
+    const [password, setPassword] = useState(test ? 'Admin' : '');
     const [error, setError] = useState('');
 
     const login = () => {
@@ -23,7 +24,8 @@ const LoginScreen = ({navigation}) => {
     };
 
     return (
-        <View style={css.view}>
+        <SafeAreaView style={css.view}>
+            <StatusBar />
             <HintInputText
                 placeholder={"email"}
                 value={email}
@@ -46,7 +48,7 @@ const LoginScreen = ({navigation}) => {
                 <Text style={loginScreenStyle.createAccountT} onPress={() => navigation.navigate('Register')}>Create an
                     account</Text>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
